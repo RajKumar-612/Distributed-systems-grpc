@@ -1,0 +1,19 @@
+# Use python image as the base image
+FROM python:3.8
+
+# Set the working directory as app in the docker
+WORKDIR /app
+
+# Copy the client code into the working directory of the client container
+COPY client.py /app/
+
+# Copy the generated protobuffer files into the working directory of the client container
+COPY Image_pb2.py /app/
+COPY Image_pb2_grpc.py /app/
+
+# Install required Python packages into the client container
+RUN pip install grpcio google-auth google-auth-oauthlib google-auth-httplib2 protobuf
+
+# Start the client container and keep the container running for 3600 seconds
+CMD ["sh", "-c", "python client.py && while :; do sleep 3600; done"]
+

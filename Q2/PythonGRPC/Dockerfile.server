@@ -1,0 +1,24 @@
+# Use Python image as the base image
+FROM python:3.8
+
+# Set the working directory as app in the docker
+WORKDIR /app
+
+# Copy the server code into the working directory of the server container
+COPY server.py /app/
+
+#Copying Images into folder in server container
+COPY Images /app/Images
+
+# Copy the generated protobuffer files into the working directory of the server container
+COPY Image_pb2.py /app/
+COPY Image_pb2_grpc.py /app/
+
+# Install required Python packages into the server container
+RUN pip install grpcio-tools
+
+# Expose the port to 50087
+EXPOSE 50087
+
+# Start the server
+CMD ["python", "server.py"]

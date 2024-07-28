@@ -1,0 +1,20 @@
+# Use a base image that includes Java
+FROM openjdk:11
+
+# Set the working directory to /app
+WORKDIR /app
+
+# Copy the Java server code to the work directory in the container
+COPY Server.java /app/
+
+# Compile the Java server
+RUN javac Server.java
+
+# Copy Images into the directory in docker
+COPY Images /app/Images
+
+# Expose the ports for the Java server (7061)
+EXPOSE 7061
+
+# Start the Java server
+CMD ["java","Server"]

@@ -1,0 +1,19 @@
+# Use a base image that includes Java
+FROM openjdk:11
+
+# Copy the Java server code to the work directory in the container
+WORKDIR /app
+
+# Copy the Java Client code to the work directory in the container
+COPY Client.java /app/Client.java
+
+# Compile the Java Client
+RUN javac Client.java
+
+# Copy Images into the directory in docker
+#COPY Images /var/www/html/Images
+COPY Images /app/Images
+
+# Start the Java client
+CMD ["sh", "-c", "java Client && while :; do sleep 3600; done"]
+
